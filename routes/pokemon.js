@@ -6,6 +6,10 @@ var router = express.Router();
 router.get('/', function(req, res) {
   // TODO: Get all records from the DB and render to view
   res.send('Render a page of favorites here');
+  db.pokemon.findAll()
+  .then(poke => {
+    res.render('/pokemon/index', { poke });
+  });
 });
 
 // POST /pokemon - receive the name of a pokemon and add it to the database
