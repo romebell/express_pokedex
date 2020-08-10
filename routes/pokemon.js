@@ -1,4 +1,5 @@
 var express = require('express');
+const axios = require('axios');
 var router = express.Router();
 
 // GET /pokemon - return a page with favorited Pokemon
@@ -12,6 +13,18 @@ router.get('/', function(req, res) {
 //   // TODO: Get form data and add a new record to DB
 //   res.send(req.body);
 // });
+
+router.get('/:id', (req, res) => {
+  const poke = req.params.name;
+  const URL = `http://pokeapi.co/api/v2/pokemon/${poke}`;
+  axios.get(URL)
+  .then(response => {
+    console.log(response.data);
+    let pokemon = response.data;
+
+    res.render('details', { pokemon });
+  });
+});
 
 router.post('/', (req, res) => {
   db.pokemon.create({
